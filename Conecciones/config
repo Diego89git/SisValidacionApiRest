@@ -1,0 +1,9 @@
+{
+	"coneccion":{
+	"servidor":"localhost",
+	"usuario":"root",
+	"pass":"",
+	"database":"sis_validacion",
+	"port":"3306"
+	}
+}
