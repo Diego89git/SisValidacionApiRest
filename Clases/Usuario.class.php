@@ -7,7 +7,14 @@ class Usuario extends Coneccion
 	
 public function allUsuarios(){
 	$_respuestas = new Respuestas;
-	$consulta= "SELECT CED_USU, NOM_USU, APE_USU FROM usuario ";
+	$consulta= "SELECT CED_USU, NOM_USU, APE_USU 
+				FROM usuario 
+				WHERE CED_USU NOT IN (
+					SELECT CED_USU_PER 
+                  	FROM ACTIVOS 
+                  	WHERE ID_ACT IN (SELECT DV.ID_ACT_VAL 
+                    	FROM detalle_validacion dv, validaciones vl
+                       	WHERE dv.ID_VAL_DET=vl.ID_VAL and vl.EST_VAL='PENDIENTE'))";
 	$datos= parent:: obtenerDatos($consulta);
 	if(isset($datos[0]['CED_USU'])){
 		$result= $_respuestas->respuesta;
@@ -19,7 +26,14 @@ public function allUsuarios(){
 }
 public function allUsuarioss(){
 	$_respuestas = new Respuestas;
-	$consulta= "SELECT CED_USU, NOM_USU, APE_USU FROM usuario ";
+	$consulta= "SELECT CED_USU, NOM_USU, APE_USU 
+				FROM usuario 
+				WHERE CED_USU NOT IN (
+					SELECT CED_USU_PER 
+                  	FROM ACTIVOS 
+                  	WHERE ID_ACT IN (SELECT DV.ID_ACT_VAL 
+                    	FROM detalle_validacion dv, validaciones vl
+                       	WHERE dv.ID_VAL_DET=vl.ID_VAL and vl.EST_VAL='PENDIENTE'))";
 	$datos= parent:: obtenerDatos($consulta);
 	if(isset($datos[0]['CED_USU'])){
 		$result= $_respuestas->respuesta;
