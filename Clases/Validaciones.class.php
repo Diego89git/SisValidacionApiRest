@@ -17,6 +17,27 @@ public function allValidacionesByEstado($estado){
 		return $_respuestas->error_200("No existen VALIDACIONES EN ESTADO: ".$estado);
 	}
 }
+public function getDetalleValidacionById($id_val){
+	$_respuestas = new Respuestas;
+	$consulta= "    SELECT
+				    dv.ID_VAL_DET , act.ID_ACT, act.NOM_ACT , act.CED_USU_PER , ifnull(act.OBS_ACT,'') as OBS_ACT, us.NOM_USU, us.APE_USU
+				    FROM 
+				      detalle_validacion dv 
+				    , activos act
+				    , usuario us
+				    WHERE 
+				        dv.ID_ACT_VAL=act.ID_ACT
+				    and act.CED_USU_PER=us.CED_USU
+				    and dv.ID_VAL_DET='$id_val'";
+	$datos= parent:: obtenerDatos($consulta);
+	if(isset($datos[0]['ID_VAL_DET'])){
+		$result= $_respuestas->respuesta;
+		$result['result']=$datos;
+		return $datos;
+	}else{
+		return $_respuestas->errors_200("No existen VALIDACIONES EN ESTADO: ".$estado);
+	}
+}
 
 public function insertarValidacion(){
 	$_respuestas = new Respuestas;
