@@ -20,6 +20,20 @@ if($_SERVER['REQUEST_METHOD']=="GET"){
 		}
 		
 	}
+	if(isset($_GET['ValidacionesByEstados'])){
+		$estado=$_GET['ValidacionesByEstados'];
+		$postBody= file_get_contents("php://input");
+		$datosArray = $_validaciones->allValidacionesByEstados($estado);
+		header('Content-Type: aplication/json');
+		if(isset($datosArray['result']['error_id'])){
+			$codRes=$datosArray['result']['error_id'];
+			http_response_code($codRes);
+		}else{
+			http_response_code(200);
+			echo json_encode($datosArray);
+		}
+		
+	}
 	if(isset($_GET['DetalleValidacionById'])){
 		$id_val=$_GET['ID_VAL_DET'];
 		$postBody= file_get_contents("php://input");
@@ -35,8 +49,11 @@ if($_SERVER['REQUEST_METHOD']=="GET"){
 		
 	}
 	if(isset($_GET['insertarValidacion'])){
+		$Nombre=str_replace("_"," ", $_GET['Nombre']);
+		$Descripcion=str_replace("_", " ", $_GET['Descripcion']);
+		$idUsuario=$_GET['idUsuario'];
 		$postBody= file_get_contents("php://input");
-		$datosArray = $_validaciones->insertarValidacion();
+		$datosArray = $_validaciones->insertarValidacion($Nombre, $Descripcion, $idUsuario);
 		header('Content-Type: aplication/json');
 		if(isset($datosArray['result']['error_id'])){
 			$codRes=$datosArray['result']['error_id'];
@@ -49,9 +66,9 @@ if($_SERVER['REQUEST_METHOD']=="GET"){
 	}
 	if(isset($_GET['idValidacion'])){
 		$idValidacion=$_GET['idValidacion'];
-		$idActivo=$_GET['idActivo'];
+		$idEmpleado=$_GET['idEmpleado'];
 		$postBody= file_get_contents("php://input");
-		$datosArray = $_validaciones->insertarValidacionDetalle($idValidacion, $idActivo);
+		$datosArray = $_validaciones->insertarValidacionDetalle($idValidacion, $idEmpleado);
 		header('Content-Type: aplication/json');
 		if(isset($datosArray['result']['error_id'])){
 			$codRes=$datosArray['result']['error_id'];
@@ -66,6 +83,19 @@ if($_SERVER['REQUEST_METHOD']=="GET"){
 		$cedula=$_GET['usuario'];
 		$postBody= file_get_contents("php://input");
 		$datosArray = $_usuarios->ObtenerUsuario($cedula);
+		header('Content-Type: aplication/json');
+		if(isset($datosArray['result']['error_id'])){
+			$codRes=$datosArray['result']['error_id'];
+			http_response_code($codRes);
+		}else{
+			http_response_code(200);
+			echo json_encode($datosArray);
+		}
+		
+	}
+	if(isset($_GET['Test'])){
+		$postBody= file_get_contents("php://input");
+		$datosArray = $_respuestas->test();
 		header('Content-Type: aplication/json');
 		if(isset($datosArray['result']['error_id'])){
 			$codRes=$datosArray['result']['error_id'];

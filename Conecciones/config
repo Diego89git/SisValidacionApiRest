@@ -3,7 +3,7 @@
 	"servidor":"localhost",
 	"usuario":"root",
 	"pass":"",
-	"database":"sis_validacion",
+	"database":"sisvalidaciones",
 	"port":"3306"
 	}
 }

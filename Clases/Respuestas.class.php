@@ -30,6 +30,14 @@ class Respuestas {
 		);
 		return $this->respuesta;
 	}
+	public function test(){
+		$this->respuesta["status"]="ok";
+		$this->respuesta["result"]= array(
+			"cod"=>"200",
+			"msg"=>"Se obtuvo una respuesta satisfactoria"
+		);
+		return $this->respuesta;
+	}
 
 
 

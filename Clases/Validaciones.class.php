@@ -1,15 +1,16 @@
 <?php
 require_once '../Conecciones/coneccion.php';
 require_once 'Respuestas.class.php';
+require_once 'Activo.class.php';
 
 class Validaciones extends Coneccion
 {
 	
 public function allValidacionesByEstado($estado){
 	$_respuestas = new Respuestas;
-	$consulta= "SELECT ID_VAL, IFNULL(OBS_VAL,'') AS OBS_VAL, FEC_VAL, EST_VAL FROM validaciones WHERE EST_VAL='$estado' ";
+	$consulta= "SELECT Id, NOM_VAL, DES_VAL, FEC_CRE_VAL, IFNULL(FEC_ACT_VAL,0) FEC_ACT_VAL, ID_USU_CVAL, IFNULL(ID_USU_AVAL,0) ID_USU_AVAL , EST_VAL,IFNULL(OBS_VAL,'') AS OBS_VAL FROM validaciones WHERE EST_VAL='$estado' ";
 	$datos= parent:: obtenerDatos($consulta);
-	if(isset($datos[0]['ID_VAL'])){
+	if(isset($datos[0]['NOM_VAL'])){
 		$result= $_respuestas->respuesta;
 		$result['result']=$datos;
 		return $datos;
@@ -17,6 +18,19 @@ public function allValidacionesByEstado($estado){
 		return $_respuestas->error_200("No existen VALIDACIONES EN ESTADO: ".$estado);
 	}
 }
+public function allValidacionesByEstados($estado){
+	$_respuestas = new Respuestas;
+	$consulta= "SELECT Id, NOM_VAL, DES_VAL, FEC_CRE_VAL,FEC_ACT_VAL, ID_USU_CVAL, ID_USU_AVAL, EST_VAL,IFNULL(OBS_VAL,'') AS OBS_VAL FROM validaciones WHERE EST_VAL='$estado' ";
+	$datos= parent:: obtenerDatos($consulta);
+	if(isset($datos[0]['NOM_VAL'])){
+		$result= $_respuestas->respuesta;
+		$result['result']=$datos;
+		return $result;
+	}else{
+		return $_respuestas->error_200("No existen VALIDACIONES EN ESTADO: ".$estado);
+	}
+}
+
 public function getDetalleValidacionById($id_val){
 	$_respuestas = new Respuestas;
 	$consulta= "    SELECT
@@ -39,9 +53,9 @@ public function getDetalleValidacionById($id_val){
 	}
 }
 
-public function insertarValidacion(){
+public function insertarValidacion($Nombre, $Descripcion, $idUsuario){
 	$_respuestas = new Respuestas;
-	$consulta= "INSERT INTO validaciones (OBS_VAL, FEC_VAL, EST_VAL) VALUES ( NULL, current_timestamp(), 'PENDIENTE')";
+	$consulta= "INSERT INTO validaciones (NOM_VAL, DES_VAL, FEC_CRE_VAL, FEC_ACT_VAL, ID_USU_CVAL, ID_USU_AVAL, EST_VAL, OBS_VAL) VALUES ( '$Nombre', '$Descripcion', current_timestamp(), null, '$idUsuario', null, 'PENDIENTE', NULl)";
 	$datos= parent:: nonConsultaId($consulta);
 	if($datos>0){
 		$result= $_respuestas->respuesta;
@@ -52,16 +66,48 @@ public function insertarValidacion(){
 	}
 }
 
-public function insertarValidacionDetalle($idValidacion, $idActivo){
+public function insertarValidacionDetalle($idValidacion, $idEmpleado){
 	$_respuestas = new Respuestas;
-	$consulta= "INSERT INTO detalle_validacion (ID_VAL_DET, EST_CON_DET, ID_ACT_VAL) VALUES ('$idValidacion', '0', '$idActivo')";
-	$datos= parent:: nonConsulta($consulta);
-	if($datos>0){
+	$idEmpVal=$this->insertarDetalleEmpleadosValidacion($idValidacion, $idEmpleado);
+	$contador=0;
+	if($idEmpVal>0){
+		$_activos= new Activo;
+		$datos=$_activos->getActivosByCedula($idEmpleado);
+		foreach ($datos as $dato) {
+			$this->insertarDetalleActivosValidacion($idEmpVal, $dato['COD_ACT']);
+			$contador++;
+		}
+		if($contador>0){
 		$result= $_respuestas->respuesta;
-		$result['result']=$datos;
+		$result['result']=$contador;
 		return $result;
 	}else{
 		return $_respuestas->error_200("No se grabo");
+	}
+
+	}
+	
+}
+public function insertarDetalleActivosValidacion($idEmpVal,$idActivo){
+	$consulta= "INSERT INTO activosvalidacion (ID_EMPV_ACTV, ID_ACT_ACTV, EST_ACTV, OBS_ACTV) VALUES ('$idEmpVal', '$idActivo', 0, null)";
+	$datos= parent:: nonConsultaId($consulta);
+	if($datos>0){
+		
+		return $datos;
+	}else{
+		return 0;
+	}
+
+}
+
+public function insertarDetalleEmpleadosValidacion($idValidacion, $idEmpleado){
+	$consulta= "INSERT INTO empleadosvalidacion (ID_VAL_EMPV, CED_EMP_EMPV, OBS_EMPV) VALUES ('$idValidacion', '$idEmpleado', null)";
+	$datos= parent:: nonConsultaId($consulta);
+	if($datos>0){
+		
+		return $datos;
+	}else{
+		return 0;
 	}
 }
 

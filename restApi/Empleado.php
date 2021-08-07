@@ -1,14 +1,14 @@
 <?php 
 require_once '../Clases/Respuestas.class.php';
-require_once '../Clases/Usuario.class.php';
+require_once '../Clases/Empleado.class.php';
 
 $_respuestas= new Respuestas;
-$_usuarios= new Usuario;
+$_empleados= new Empleado;
 
 if($_SERVER['REQUEST_METHOD']=="GET"){
-	if(isset($_GET['usuarios'])){
+	if(isset($_GET['empleados'])){
 		$postBody= file_get_contents("php://input");
-		$datosArray = $_usuarios->allUsuarios();
+		$datosArray = $_empleados->allEmpleados();
 		header('Content-Type: aplication/json');
 		if(isset($datosArray['result']['error_id'])){
 			$codRes=$datosArray['result']['error_id'];
@@ -19,9 +19,9 @@ if($_SERVER['REQUEST_METHOD']=="GET"){
 		}
 		
 	}
-	if(isset($_GET['usuarioss'])){
+	if(isset($_GET['empleadoss'])){
 		$postBody= file_get_contents("php://input");
-		$datosArray = $_usuarios->allUsuarioss();
+		$datosArray = $_empleados->allEmpleadoss();
 		header('Content-Type: aplication/json');
 		if(isset($datosArray['result']['error_id'])){
 			$codRes=$datosArray['result']['error_id'];
@@ -32,10 +32,10 @@ if($_SERVER['REQUEST_METHOD']=="GET"){
 		}
 		
 	}
-	if(isset($_GET['usuario'])){
-		$cedula=$_GET['usuario'];
+	if(isset($_GET['empleado'])){
+		$cedula=$_GET['empleado'];
 		$postBody= file_get_contents("php://input");
-		$datosArray = $_usuarios->ObtenerUsuario($cedula);
+		$datosArray = $_empleados->ObtenerEmpleado($cedula);
 		header('Content-Type: aplication/json');
 		if(isset($datosArray['result']['error_id'])){
 			$codRes=$datosArray['result']['error_id'];
