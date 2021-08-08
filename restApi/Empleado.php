@@ -9,6 +9,7 @@ if($_SERVER['REQUEST_METHOD']=="GET"){
 	if(isset($_GET['empleados'])){
 		$postBody= file_get_contents("php://input");
 		$datosArray = $_empleados->allEmpleados();
+		$_empleados->desconectar();
 		header('Content-Type: aplication/json');
 		if(isset($datosArray['result']['error_id'])){
 			$codRes=$datosArray['result']['error_id'];
@@ -22,6 +23,7 @@ if($_SERVER['REQUEST_METHOD']=="GET"){
 	if(isset($_GET['empleadoss'])){
 		$postBody= file_get_contents("php://input");
 		$datosArray = $_empleados->allEmpleadoss();
+		$_empleados->desconectar();
 		header('Content-Type: aplication/json');
 		if(isset($datosArray['result']['error_id'])){
 			$codRes=$datosArray['result']['error_id'];
@@ -36,6 +38,7 @@ if($_SERVER['REQUEST_METHOD']=="GET"){
 		$cedula=$_GET['empleado'];
 		$postBody= file_get_contents("php://input");
 		$datosArray = $_empleados->ObtenerEmpleado($cedula);
+		$_empleados->desconectar();
 		header('Content-Type: aplication/json');
 		if(isset($datosArray['result']['error_id'])){
 			$codRes=$datosArray['result']['error_id'];

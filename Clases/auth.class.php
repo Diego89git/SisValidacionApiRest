@@ -55,6 +55,10 @@ class auth extends Coneccion{
 
 	}
 
+	public function desconectar(){
+		parent:: desconectar();
+	}
+
 
 
 }

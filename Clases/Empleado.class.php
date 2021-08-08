@@ -55,6 +55,10 @@ public function obtenerEmpleado($cedula){
 		return $_respuestas->error_200("No existen usuarios");
 	}
 }
+public function desconectar(){
+		parent:: desconectar();
+	}
+
 
 
 }

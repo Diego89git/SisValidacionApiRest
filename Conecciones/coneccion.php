@@ -59,13 +59,17 @@ class Coneccion
 	public function nonConsultaId($consulta){
 		$datos= $this->coneccion->query($consulta);
 		$rows= $this->coneccion->affected_rows;
-		if($rows>=1){
+		if($rows>=1){			
 			return $this->coneccion->insert_id;
 		}else{
 			return 0;
 		}
 
 	}
+	public function desconectar ()
+	  {
+	    mysqli_close($this->coneccion);
+	  }
 }
 
 ?>

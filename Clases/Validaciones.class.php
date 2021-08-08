@@ -39,7 +39,7 @@ public function getEmpleadosValidacionByIdVal($id_val){
 		$result['result']=$datos;
 		return $datos;
 	}else{
-		return $_respuestas->errors_200("No existen VALIDACIONES EN ESTADO: ".$estado);
+		return $_respuestas->errors_200("No existen VALIDACIONES EN ESTADO: ".$id_val);
 	}
 }
 public function getActivosValidacionByIdEmpVal($idEmpVal){
@@ -51,7 +51,7 @@ public function getActivosValidacionByIdEmpVal($idEmpVal){
 		$result['result']=$datos;
 		return $datos;
 	}else{
-		return $_respuestas->errors_200("No existen VALIDACIONES EN ESTADO: ".$estado);
+		return $_respuestas->errors_200("No existen VALIDACIONES EN ESTADO: ".$idEmpVal);
 	}
 }
 public function getValidacionById($id){
@@ -109,7 +109,7 @@ public function getDetalleValidacionById($id_val){
 		$result['result']=$datos;
 		return $datos;
 	}else{
-		return $_respuestas->errors_200("No existen VALIDACIONES EN ESTADO: ".$estado);
+		return $_respuestas->errors_200("No existen VALIDACIONES EN ESTADO: ".$id_val);
 	}
 }
 
@@ -170,6 +170,30 @@ public function insertarDetalleEmpleadosValidacion($idValidacion, $idEmpleado){
 		return 0;
 	}
 }
+public function eliminarEmpVal($id){
+	$_respuestas = new Respuestas;
+	$consulta= "DELETE FROM empleadosvalidacion  WHERE Id='$id'";
+	$datos= parent:: nonConsultaId($consulta);
+	if($datos>0){
+		$result= $_respuestas->respuesta;
+		$result['result']=$datos;
+		return $datos;
+	}else{
+		return 0;
+	}
+}
+public function eliminarValidacion($id){
+	$_respuestas = new Respuestas;
+	$consulta= "DELETE FROM validaciones  WHERE Id='$id'";
+	$datos= parent:: nonConsultaId($consulta);
+	if($datos>0){
+		$result= $_respuestas->respuesta;
+		$result['result']=$datos;
+		return $datos;
+	}else{
+		return 0;
+	}
+}
 
 
 public function allProcesosValidacionPorEstado($estado){
@@ -196,9 +220,10 @@ public function procesoValidacionPorId($id){
 		return $_respuestas->error_200("No existen usuarios");
 	}
 }
-
+    public function desconectar(){
+		parent:: desconectar();
+	}
 
 }
-
 
 ?>

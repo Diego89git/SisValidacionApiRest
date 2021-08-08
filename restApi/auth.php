@@ -11,6 +11,7 @@ if($_SERVER['REQUEST_METHOD']=="GET"){
 		$usuario=$_GET['u'];
 		$pass=$_GET['p'];
 		$datosArray = $_auth->login($usuario, $pass);
+		$_auth->desconectar();
 		header('Content-Type: aplication/json');
 		if(isset($datosArray['result']['error_id'])){
 			$codRes=$datosArray['result']['error_id'];
@@ -23,6 +24,7 @@ if($_SERVER['REQUEST_METHOD']=="GET"){
 	if(isset($_GET['userById'])){
 		$id=$_GET['userById'];
 		$datosArray = $_auth->userById($id);
+		$_auth->desconectar();
 		header('Content-Type: aplication/json');
 		if(isset($datosArray['result']['error_id'])){
 			$codRes=$datosArray['result']['error_id'];

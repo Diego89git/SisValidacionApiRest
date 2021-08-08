@@ -22,6 +22,14 @@ class Respuestas {
 		);
 		return $this->respuesta;
 	}
+	public function errors_200($str="Datos incorrectos"){
+		$this->respuesta["status"]="error";
+		$this->respuesta["result"]= array(
+			"error_id"=>"200",
+			"error_msg"=>$str
+		);
+		return $this->respuesta;
+	}
 	public function error_400(){
 		$this->respuesta["status"]="error";
 		$this->respuesta["result"]= array(
@@ -34,7 +42,7 @@ class Respuestas {
 		$this->respuesta["status"]="ok";
 		$this->respuesta["result"]= array(
 			"cod"=>"200",
-			"msg"=>"Se obtuvo una respuesta satisfactoria"
+			"msg"=>"Se obtuvo una"
 		);
 		return $this->respuesta;
 	}

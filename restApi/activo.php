@@ -10,6 +10,7 @@ if($_SERVER['REQUEST_METHOD']=="GET"){
 		$usuario=$_GET['activosByUser'];
 		$postBody= file_get_contents("php://input");
 		$datosArray = $_activos->getActivosByUsuario($usuario);
+		$_activos->desconectar();
 		header('Content-Type: aplication/json');
 		if(isset($datosArray['result']['error_id'])){
 			$codRes=$datosArray['result']['error_id'];
@@ -24,6 +25,7 @@ if($_SERVER['REQUEST_METHOD']=="GET"){
 		$codigo=$_GET['activoByCodigo'];
 		$postBody= file_get_contents("php://input");
 		$datosArray = $_activos->getActivosByCodigo($codigo);
+		$_activos->desconectar();
 		header('Content-Type: aplication/json');
 		if(isset($datosArray['result']['error_id'])){
 			$codRes=$datosArray['result']['error_id'];

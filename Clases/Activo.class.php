@@ -39,6 +39,10 @@ public function getActivosByCodigo($codigo){
 		return 0;
 	}
 }
+public function desconectar(){
+		parent:: desconectar();
+	}
+
 
 
 
