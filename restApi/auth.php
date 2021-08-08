@@ -21,7 +21,7 @@ if($_SERVER['REQUEST_METHOD']=="GET"){
 		echo json_encode($datosArray);
 	}
 	if(isset($_GET['userById'])){
-		$id=$_GET['id'];
+		$id=$_GET['userById'];
 		$datosArray = $_auth->userById($id);
 		header('Content-Type: aplication/json');
 		if(isset($datosArray['result']['error_id'])){

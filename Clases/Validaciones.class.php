@@ -20,7 +20,7 @@ public function allValidacionesByEstado($estado){
 }
 public function allValidacionesByEstados($estado){
 	$_respuestas = new Respuestas;
-	$consulta= "SELECT Id, NOM_VAL, DES_VAL, FEC_CRE_VAL,FEC_ACT_VAL, ID_USU_CVAL, ID_USU_AVAL, EST_VAL,IFNULL(OBS_VAL,'') AS OBS_VAL FROM validaciones WHERE EST_VAL='$estado' ";
+	$consulta= "SELECT Id, NOM_VAL, DES_VAL, FEC_CRE_VAL, IFNULL(FEC_ACT_VAL,0) FEC_ACT_VAL, ID_USU_CVAL, IFNULL(ID_USU_AVAL,0) ID_USU_AVAL , EST_VAL,IFNULL(OBS_VAL,'') AS OBS_VAL FROM validaciones WHERE EST_VAL='$estado' ";
 	$datos= parent:: obtenerDatos($consulta);
 	if(isset($datos[0]['NOM_VAL'])){
 		$result= $_respuestas->respuesta;
@@ -28,6 +28,66 @@ public function allValidacionesByEstados($estado){
 		return $result;
 	}else{
 		return $_respuestas->error_200("No existen VALIDACIONES EN ESTADO: ".$estado);
+	}
+}
+public function getEmpleadosValidacionByIdVal($id_val){
+	$_respuestas = new Respuestas;
+	$consulta= "SELECT  Id, ID_VAL_EMPV, CED_EMP_EMPV, IFNULL(OBS_EMPV,'') OBS_EMPV FROM empleadosvalidacion WHERE ID_VAL_EMPV='$id_val'";
+	$datos= parent:: obtenerDatos($consulta);
+	if(isset($datos[0]['ID_VAL_EMPV'])){
+		$result= $_respuestas->respuesta;
+		$result['result']=$datos;
+		return $datos;
+	}else{
+		return $_respuestas->errors_200("No existen VALIDACIONES EN ESTADO: ".$estado);
+	}
+}
+public function getActivosValidacionByIdEmpVal($idEmpVal){
+	$_respuestas = new Respuestas;
+	$consulta= "SELECT  Id, ID_EMPV_ACTV, ID_ACT_ACTV, EST_ACTV, IFNULL(OBS_ACTV,'') OBS_ACTV FROM activosvalidacion WHERE ID_EMPV_ACTV='$idEmpVal'";
+	$datos= parent:: obtenerDatos($consulta);
+	if(isset($datos[0]['ID_EMPV_ACTV'])){
+		$result= $_respuestas->respuesta;
+		$result['result']=$datos;
+		return $datos;
+	}else{
+		return $_respuestas->errors_200("No existen VALIDACIONES EN ESTADO: ".$estado);
+	}
+}
+public function getValidacionById($id){
+	$_respuestas = new Respuestas;
+	$consulta= "SELECT Id, NOM_VAL, DES_VAL, FEC_CRE_VAL, IFNULL(FEC_ACT_VAL,0) FEC_ACT_VAL, ID_USU_CVAL, IFNULL(ID_USU_AVAL,0) ID_USU_AVAL , EST_VAL,IFNULL(OBS_VAL,'') AS OBS_VAL FROM validaciones WHERE Id='$id' ";
+	$datos= parent:: obtenerDatos($consulta);
+	if(isset($datos[0]['NOM_VAL'])){
+		$result= $_respuestas->respuesta;
+		$result['result']=$datos;
+		return $result;
+	}else{
+		return $_respuestas->error_200("No existen usuarios");
+	}
+}
+public function getEmpleadoValidacionById($id){
+	$_respuestas = new Respuestas;
+	$consulta= "SELECT  Id, ID_VAL_EMPV, CED_EMP_EMPV, IFNULL(OBS_EMPV,'') OBS_EMPV FROM empleadosvalidacion WHERE  Id='$id' ";
+	$datos= parent:: obtenerDatos($consulta);
+	if(isset($datos[0]['ID_VAL_EMPV'])){
+		$result= $_respuestas->respuesta;
+		$result['result']=$datos;
+		return $result;
+	}else{
+		return $_respuestas->error_200("No existen usuarios");
+	}
+}
+public function getActivoValidacionById($id){
+	$_respuestas = new Respuestas;
+	$consulta= "SELECT  Id, ID_EMPV_ACTV, ID_ACT_ACTV, EST_ACTV, IFNULL(OBS_ACTV,'') OBS_ACTV FROM activosvalidacion WHERE  Id='$id' ";
+	$datos= parent:: obtenerDatos($consulta);
+	if(isset($datos[0]['ID_EMPV_ACTV'])){
+		$result= $_respuestas->respuesta;
+		$result['result']=$datos;
+		return $result;
+	}else{
+		return $_respuestas->error_200("No existen usuarios");
 	}
 }
 

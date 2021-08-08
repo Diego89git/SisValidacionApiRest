@@ -20,6 +20,20 @@ if($_SERVER['REQUEST_METHOD']=="GET"){
 		}
 		
 	}
+	if(isset($_GET['activoByCodigo'])){
+		$codigo=$_GET['activoByCodigo'];
+		$postBody= file_get_contents("php://input");
+		$datosArray = $_activos->getActivosByCodigo($codigo);
+		header('Content-Type: aplication/json');
+		if(isset($datosArray['result']['error_id'])){
+			$codRes=$datosArray['result']['error_id'];
+			http_response_code($codRes);
+		}else{
+			http_response_code(200);
+			echo json_encode($datosArray);
+		}
+		
+	}
 
 } else if($_SERVER['REQUEST_METHOD']=="POST"){
 

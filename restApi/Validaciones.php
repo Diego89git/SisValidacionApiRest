@@ -34,10 +34,74 @@ if($_SERVER['REQUEST_METHOD']=="GET"){
 		}
 		
 	}
+	if(isset($_GET['validacionById'])){
+		$id=$_GET['validacionById'];
+		$datosArray = $_validaciones->getValidacionById($id);
+		header('Content-Type: aplication/json');
+		if(isset($datosArray['result']['error_id'])){
+			$codRes=$datosArray['result']['error_id'];
+			http_response_code($codRes);
+		}else{
+			http_response_code(200);
+		}
+		echo json_encode($datosArray);
+	}
+	if(isset($_GET['EmpleadoValidacionById'])){
+		$id=$_GET['EmpleadoValidacionById'];
+		$datosArray = $_validaciones->getEmpleadoValidacionById($id);
+		header('Content-Type: aplication/json');
+		if(isset($datosArray['result']['error_id'])){
+			$codRes=$datosArray['result']['error_id'];
+			http_response_code($codRes);
+		}else{
+			http_response_code(200);
+		}
+		echo json_encode($datosArray);
+	}
+	if(isset($_GET['ActivoValidacionById'])){
+		$id=$_GET['ActivoValidacionById'];
+		$datosArray = $_validaciones->getActivoValidacionById($id);
+		header('Content-Type: aplication/json');
+		if(isset($datosArray['result']['error_id'])){
+			$codRes=$datosArray['result']['error_id'];
+			http_response_code($codRes);
+		}else{
+			http_response_code(200);
+		}
+		echo json_encode($datosArray);
+	}
 	if(isset($_GET['DetalleValidacionById'])){
 		$id_val=$_GET['ID_VAL_DET'];
 		$postBody= file_get_contents("php://input");
 		$datosArray = $_validaciones->getDetalleValidacionById($id_val);
+		header('Content-Type: aplication/json');
+		if(isset($datosArray['result']['error_id'])){
+			$codRes=$datosArray['result']['error_id'];
+			http_response_code($codRes);
+		}else{
+			http_response_code(200);
+			echo json_encode($datosArray);
+		}
+		
+	}
+	if(isset($_GET['EmpleadosValidacionByIdVal'])){
+		$id_val=$_GET['ID_VAL'];
+		$postBody= file_get_contents("php://input");
+		$datosArray = $_validaciones->getEmpleadosValidacionByIdVal($id_val);
+		header('Content-Type: aplication/json');
+		if(isset($datosArray['result']['error_id'])){
+			$codRes=$datosArray['result']['error_id'];
+			http_response_code($codRes);
+		}else{
+			http_response_code(200);
+			echo json_encode($datosArray);
+		}
+		
+	}
+	if(isset($_GET['ActivosValidacionByIdEmpVal'])){
+		$idEmpVal=$_GET['ActivosValidacionByIdEmpVal'];
+		$postBody= file_get_contents("php://input");
+		$datosArray = $_validaciones->getActivosValidacionByIdEmpVal($idEmpVal);
 		header('Content-Type: aplication/json');
 		if(isset($datosArray['result']['error_id'])){
 			$codRes=$datosArray['result']['error_id'];

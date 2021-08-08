@@ -27,6 +27,18 @@ public function getActivosByCedula($cedula){
 		return 0;
 	}
 }
+public function getActivosByCodigo($codigo){
+	$_respuestas = new Respuestas;
+	$consulta= "SELECT COD_ACT, NOM_ACT, CED_EMP_ACT, IFNULL(OBS_ACT,'') OBS_ACT FROM activos WHERE COD_ACT='$codigo'";
+	$datos= parent:: obtenerDatos($consulta);
+	if(isset($datos[0]['COD_ACT'])){
+		$result= $_respuestas->respuesta;
+		$result['result']=$datos;
+		return $result;
+	}else{
+		return 0;
+	}
+}
 
 
 

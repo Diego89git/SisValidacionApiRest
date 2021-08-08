@@ -44,6 +44,16 @@ class auth extends Coneccion{
 		}
 
 	}
+	public function userById($id){
+		$consulta= "SELECT Id, NOM_USU, COR_USU, PAS_USU FROM usuario Where Id='$id'";
+		$datos= parent:: obtenerDatos($consulta);
+		if(isset($datos[0]['NOM_USU'])){
+			return $datos;
+		}else{
+			return 0;
+		}
+
+	}
 
 
 
