@@ -21,10 +21,34 @@ if($_SERVER['REQUEST_METHOD']=="GET"){
 		}
 		echo json_encode($datosArray);
 	}
+	if(isset($_GET['userl']) && isset($_GET['passl'])){
+		$usuario=$_GET['userl'];
+		$pass=$_GET['passl'];
+		$datosArray = $_auth->loginValida($usuario, $pass);
+		//$_auth->desconectar();
+		header('Content-Type: aplication/json');
+		http_response_code(200);
+		echo json_encode($datosArray);
+	}
+
 	if(isset($_GET['userById'])){
 		$id=$_GET['userById'];
 		$datosArray = $_auth->userById($id);
 		$_auth->desconectar();
+		header('Content-Type: aplication/json');
+		if(isset($datosArray['result']['error_id'])){
+			$codRes=$datosArray['result']['error_id'];
+			http_response_code($codRes);
+		}else{
+			http_response_code(200);
+		}
+		echo json_encode($datosArray);
+	}
+	if(isset($_GET['userLogin'])){
+		$usuario=$_GET['user'];
+		$pass=$_GET['pass'];
+		$datosArray = $_auth->userByLogin($usuario, $pass);
+		//$_auth->desconectar();
 		header('Content-Type: aplication/json');
 		if(isset($datosArray['result']['error_id'])){
 			$codRes=$datosArray['result']['error_id'];

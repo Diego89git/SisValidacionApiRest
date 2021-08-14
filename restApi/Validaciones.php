@@ -21,6 +21,23 @@ if($_SERVER['REQUEST_METHOD']=="GET"){
 		}
 		
 	}
+	if(isset($_GET['ValidacionesByEstadoVal'])){
+		$estado=$_GET['ValidacionesByEstadoVal'];
+		$postBody= file_get_contents("php://input");
+		$datosArray = $_validaciones->validarValidacionesByEstado($estado);
+		$_validaciones->desconectar();
+		header('Content-Type: aplication/json');
+		if(isset($datosArray['result']['error_id'])){
+			$codRes=$datosArray['result']['error_id'];
+			http_response_code($codRes);
+		}else{
+			http_response_code(200);
+			echo json_encode($datosArray);
+		}
+		
+	}
+	
+
 	if(isset($_GET['ValidacionesByEstados'])){
 		$estado=$_GET['ValidacionesByEstados'];
 		$postBody= file_get_contents("php://input");
@@ -105,10 +122,86 @@ if($_SERVER['REQUEST_METHOD']=="GET"){
 		}
 		
 	}
+	if(isset($_GET['EmpleadosValidacionByIdValAd'])){
+		$id_val=$_GET['ID_VAL'];
+		$postBody= file_get_contents("php://input");
+		$datosArray = $_validaciones->getEmpleadosValidacionByIdValAd($id_val);
+		$_validaciones->desconectar();
+		header('Content-Type: aplication/json');
+		if(isset($datosArray['result']['error_id'])){
+			$codRes=$datosArray['result']['error_id'];
+			http_response_code($codRes);
+		}else{
+			http_response_code(200);
+			echo json_encode($datosArray);
+		}
+		
+	}
+
 	if(isset($_GET['ActivosValidacionByIdEmpVal'])){
 		$idEmpVal=$_GET['ActivosValidacionByIdEmpVal'];
 		$postBody= file_get_contents("php://input");
 		$datosArray = $_validaciones->getActivosValidacionByIdEmpVal($idEmpVal);
+		$_validaciones->desconectar();
+		header('Content-Type: aplication/json');
+		if(isset($datosArray['result']['error_id'])){
+			$codRes=$datosArray['result']['error_id'];
+			http_response_code($codRes);
+		}else{
+			http_response_code(200);
+			echo json_encode($datosArray);
+		}
+		
+	}
+	if(isset($_GET['ActivosValidacionByIdEmpValAd'])){
+		$idEmpVal=$_GET['ActivosValidacionByIdEmpValAd'];
+		$postBody= file_get_contents("php://input");
+		$datosArray = $_validaciones->getActivosValidacionByIdEmpValAd($idEmpVal);
+		$_validaciones->desconectar();
+		header('Content-Type: aplication/json');
+		if(isset($datosArray['result']['error_id'])){
+			$codRes=$datosArray['result']['error_id'];
+			http_response_code($codRes);
+		}else{
+			http_response_code(200);
+			echo json_encode($datosArray);
+		}
+		
+	}
+	if(isset($_GET['cantActivosValidacionByIdVal'])){
+		$idVal=$_GET['cantActivosValidacionByIdVal'];
+		$postBody= file_get_contents("php://input");
+		$datosArray = $_validaciones->getCantActivosValidacionByIdVal($idVal);
+		$_validaciones->desconectar();
+		header('Content-Type: aplication/json');
+		if(isset($datosArray['result']['error_id'])){
+			$codRes=$datosArray['result']['error_id'];
+			http_response_code($codRes);
+		}else{
+			http_response_code(200);
+			echo json_encode($datosArray);
+		}
+		
+	}
+	if(isset($_GET['cantActivosValidacionByIdEmpVal'])){
+		$idEmpVal=$_GET['cantActivosValidacionByIdEmpVal'];
+		$postBody= file_get_contents("php://input");
+		$datosArray = $_validaciones->getCantActivosValidacionByIdEmpVal($idEmpVal);
+		$_validaciones->desconectar();
+		header('Content-Type: aplication/json');
+		if(isset($datosArray['result']['error_id'])){
+			$codRes=$datosArray['result']['error_id'];
+			http_response_code($codRes);
+		}else{
+			http_response_code(200);
+			echo json_encode($datosArray);
+		}
+		
+	}
+	if(isset($_GET['cantEmpleadosValidacionByIdVal'])){
+		$idVal=$_GET['cantEmpleadosValidacionByIdVal'];
+		$postBody= file_get_contents("php://input");
+		$datosArray = $_validaciones->getCantEmpleadosValidacionByIdVal($idVal);
 		$_validaciones->desconectar();
 		header('Content-Type: aplication/json');
 		if(isset($datosArray['result']['error_id'])){
